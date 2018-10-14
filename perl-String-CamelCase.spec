@@ -4,33 +4,34 @@
 #
 Name     : perl-String-CamelCase
 Version  : 0.04
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-camelcase-perl/libstring-camelcase-perl_0.04-1.debian.tar.xz
 Summary  : 'camelcase, de-camelcase'
 Group    : Development/Tools
 License  : Artistic-1.0-Perl
-Requires: perl-String-CamelCase-man
+BuildRequires : buildreq-cpan
 
 %description
 String-CamelCase
 INSTALLATION
 To install this module, run the following commands:
 
-%package man
-Summary: man components for the perl-String-CamelCase package.
-Group: Default
+%package dev
+Summary: dev components for the perl-String-CamelCase package.
+Group: Development
+Provides: perl-String-CamelCase-devel = %{version}-%{release}
 
-%description man
-man components for the perl-String-CamelCase package.
+%description dev
+dev components for the perl-String-CamelCase package.
 
 
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n String-CamelCase-0.04
-mkdir -p %{_topdir}/BUILD/String-CamelCase-0.04/deblicense/
+cd ..
+%setup -q -T -D -n String-CamelCase-0.04 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/String-CamelCase-0.04/deblicense/
 
 %build
@@ -56,9 +57,9 @@ make TEST_VERBOSE=1 test
 %install
 rm -rf %{buildroot}
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -67,8 +68,8 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/String/CamelCase.pm
+/usr/lib/perl5/vendor_perl/5.26.1/String/CamelCase.pm
 
-%files man
+%files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/String::CamelCase.3
