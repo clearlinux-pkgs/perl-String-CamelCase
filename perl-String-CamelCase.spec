@@ -4,13 +4,14 @@
 #
 Name     : perl-String-CamelCase
 Version  : 0.04
-Release  : 10
+Release  : 11
 URL      : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-camelcase-perl/libstring-camelcase-perl_0.04-1.debian.tar.xz
 Summary  : 'camelcase, de-camelcase'
 Group    : Development/Tools
 License  : Artistic-1.0-Perl
+Requires: perl-String-CamelCase-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
 %description
@@ -22,23 +23,34 @@ To install this module, run the following commands:
 Summary: dev components for the perl-String-CamelCase package.
 Group: Development
 Provides: perl-String-CamelCase-devel = %{version}-%{release}
+Requires: perl-String-CamelCase = %{version}-%{release}
 
 %description dev
 dev components for the perl-String-CamelCase package.
 
 
+%package perl
+Summary: perl components for the perl-String-CamelCase package.
+Group: Default
+Requires: perl-String-CamelCase = %{version}-%{release}
+
+%description perl
+perl components for the perl-String-CamelCase package.
+
+
 %prep
 %setup -q -n String-CamelCase-0.04
-cd ..
-%setup -q -T -D -n String-CamelCase-0.04 -b 1
+cd %{_builddir}
+tar xf %{_sourcedir}/libstring-camelcase-perl_0.04-1.debian.tar.xz
+cd %{_builddir}/String-CamelCase-0.04
 mkdir -p deblicense/
-mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/String-CamelCase-0.04/deblicense/
+cp -r %{_builddir}/debian/* %{_builddir}/String-CamelCase-0.04/deblicense/
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
+export LANG=C.UTF-8
 if test -f Makefile.PL; then
 %{__perl} Makefile.PL
 make  %{?_smp_mflags}
@@ -48,7 +60,7 @@ else
 fi
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -68,8 +80,11 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.28.2/String/CamelCase.pm
 
 %files dev
 %defattr(-,root,root,-)
 /usr/share/man/man3/String::CamelCase.3
+
+%files perl
+%defattr(-,root,root,-)
+/usr/lib/perl5/vendor_perl/5.30.1/String/CamelCase.pm
