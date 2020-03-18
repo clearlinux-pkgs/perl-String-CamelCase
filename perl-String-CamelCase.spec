@@ -4,13 +4,14 @@
 #
 Name     : perl-String-CamelCase
 Version  : 0.04
-Release  : 11
+Release  : 12
 URL      : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-camelcase-perl/libstring-camelcase-perl_0.04-1.debian.tar.xz
 Summary  : 'camelcase, de-camelcase'
 Group    : Development/Tools
-License  : Artistic-1.0-Perl
+License  : Artistic-1.0 Artistic-1.0-Perl GPL-1.0
+Requires: perl-String-CamelCase-license = %{version}-%{release}
 Requires: perl-String-CamelCase-perl = %{version}-%{release}
 BuildRequires : buildreq-cpan
 
@@ -27,6 +28,14 @@ Requires: perl-String-CamelCase = %{version}-%{release}
 
 %description dev
 dev components for the perl-String-CamelCase package.
+
+
+%package license
+Summary: license components for the perl-String-CamelCase package.
+Group: Default
+
+%description license
+license components for the perl-String-CamelCase package.
 
 
 %package perl
@@ -68,6 +77,8 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-String-CamelCase
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-String-CamelCase/2d349247de26a4c9807dc9ef514fd1c0c65b1349
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -85,6 +96,10 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 %defattr(-,root,root,-)
 /usr/share/man/man3/String::CamelCase.3
 
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-String-CamelCase/2d349247de26a4c9807dc9ef514fd1c0c65b1349
+
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/String/CamelCase.pm
+/usr/lib/perl5/vendor_perl/5.30.2/String/CamelCase.pm
