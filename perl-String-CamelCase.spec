@@ -4,7 +4,7 @@
 #
 Name     : perl-String-CamelCase
 Version  : 0.04
-Release  : 12
+Release  : 13
 URL      : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-camelcase-perl/libstring-camelcase-perl_0.04-1.debian.tar.xz
@@ -102,4 +102,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.2/String/CamelCase.pm
+/usr/lib/perl5/vendor_perl/5.30.3/String/CamelCase.pm
