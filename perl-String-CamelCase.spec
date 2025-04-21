@@ -7,7 +7,7 @@
 #
 Name     : perl-String-CamelCase
 Version  : 0.04
-Release  : 28
+Release  : 29
 URL      : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/H/HI/HIO/String-CamelCase-0.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-camelcase-perl/libstring-camelcase-perl_0.04-1.debian.tar.xz
